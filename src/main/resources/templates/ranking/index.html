@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>ランキング画面</title>
+</head>
+<body>
+
+  <div class="ranking-container">
+    <div class="ranking-header-area">
+      <div class="ranking-content-area">
+        <h1 class="ranking-header">ランキング</h1>
+        <div th:if="${loginUser != null}" style="display:flex;gap:12px;align-items:center;margin:8px 0;">
+          <span th:text="${loginUser.userName} + 'さんでログイン中'"></span>
+          <form th:action="@{/logout}" method="post" style="margin:0;">
+            <button type="submit">ログアウト</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="ranking-content-area">
+        <div class="tab-and-button-row">
+          <div class="tab-buttons-wrapper">
+            <div class="tab-buttons">
+              <button id="introducerRankingTab" th:classappend="${type == 'intro'} ? 'active'" onclick="location.href='/ranking?type=intro'">
+                ① 紹介数ランキング
+              </button>
+              <button id="purchaseRankingTab" th:classappend="${type == 'purchase'} ? 'active'" onclick="location.href='/ranking?type=purchase'">
+                ② 購入数ランキング
+              </button>
+            </div>
+          </div>
+          <div class="back-button-area">
+            <button id="backToListButton" onclick="location.href='/login'">
+              ログイン画面へ
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 紹介数ランキング -->
+      <div id="introducerRankingArea" th:style="${type == 'intro'} ? 'display:block' : 'display:none'">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">順位</th>
+              <th>紹介者</th>
+              <th style="width: 80px;">書籍数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="item, stat : ${rankingList}">
+              <td class="medals">
+                <span th:if="${item.rank == 1}" style="color: gold;">🥇</span>
+                <span th:if="${item.rank == 2}" style="color: silver;">🥈</span>
+                <span th:if="${item.rank == 3}" style="color: #cd7f32;">🥉</span>
+                <span th:if="${item.rank >= 4}" th:text="${item.rank}"></span>
+              </td>
+              <td th:text="${item.name}"></td>
+              <td th:text="${item.count} + '冊'"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 購入数ランキング -->
+      <div id="purchaseRankingArea" th:style="${type == 'purchase'} ? 'display:block' : 'display:none'">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">順位</th>
+              <th>投稿者</th>
+              <th style="width: 80px;">レビュー数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="item, stat : ${rankingList}">
+              <td class="medals">
+                <span th:if="${item.rank == 1}" style="color: gold;">🥇</span>
+                <span th:if="${item.rank == 2}" style="color: silver;">🥈</span>
+                <span th:if="${item.rank == 3}" style="color: #cd7f32;">🥉</span>
+                <span th:if="${item.rank >= 4}" th:text="${item.rank}"></span>
+              </td>
+              <td th:text="${item.name}"></td>
+              <td th:text="${item.count} + '件'"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

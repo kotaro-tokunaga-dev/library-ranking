@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.RankingMapper">
+
+    <!-- 紹介数ランキング -->
+    <select id="selectIntroducerRanking" resultType="com.example.demo.application.dto.RankingItemDto">
+        SELECT
+            u.user_name as name,
+            COUNT(*) as count
+        FROM
+            shoseki_info_table s
+        JOIN
+            user_table u ON s.shoukaisha_id = u.user_id
+        GROUP BY
+            u.user_id, u.user_name
+        ORDER BY
+            count DESC
+    </select>
+
+   <!-- 購入数ランキング -->
+   <select id="selectPurchaseRanking" resultType="com.example.demo.application.dto.RankingItemDto">
+    SELECT
+        u.user_name as name,
+        COUNT(*) as count
+    FROM
+        review_table r
+    JOIN
+        shoseki_info_table s ON r.reviewed_shoseki_id = s.shoseki_id
+    JOIN
+        user_table u ON s.shoukaisha_id = u.user_id
+    GROUP BY
+        u.user_id, u.user_name
+    ORDER BY
+        count DESC
+</select>
+
+</mapper>

@@ -1,0 +1,331 @@
+/*
+ * 全体のリセットと基本設定
+ */
+body {
+  font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+  margin: 0;
+  padding: 0;
+  /* paddingをなくし、ランキングコンテナで調整 */
+  background-color: #ffffff;
+  /* 背景色を白に変更 */
+  color: #333;
+}
+
+.ranking-container {
+  max-width: 800px;
+  /* 必要に応じて調整 */
+  margin: 20px auto;
+  /* 上下の余白 */
+  background-color: #ffffff;
+
+  padding: 0;
+  /* paddingをなくし、内部で調整 */
+  box-shadow: none;
+  /* 影をなくす */
+  border-radius: 0;
+  /* 角丸をなくす */
+  border: 1px solid #ccc;
+  /* コンテナ全体の軽いボーダー */
+}
+
+/*
+ * ヘッダーとボタン
+ */
+.ranking-header-area {
+  background-color: transparent;
+  /* オレンジの帯 */
+  padding: 0 20px;
+  /* 内側の余白 */
+  color: white;
+  /* タイトル文字色を白に */
+  margin-bottom: 20px;
+  /* タブとの間隔 */
+  /* --- 修正ポイント：テキスト中央揃え --- */
+  text-align: center;
+}
+
+/* ★ タイトル文字の背景のみをオレンジにするための修正 ★ */
+.ranking-header-area .ranking-content-area:first-child {
+  background-color: #ffb347;
+  /* オレンジの背景を適用 */
+  padding: 15px 0;
+  /* 上下のパディングを設定 */
+  margin: 0 -20px;
+  /* .ranking-header-areaの左右パディングを相殺 */
+}
+
+.ranking-header-area h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  /* h1のデフォルトマージンをリセット */
+  padding: 0;
+  /* --- 修正ポイント：中央揃えの設定を親から継承させるため、デフォルトを維持 --- */
+  display: inline-block;
+  /* 不要なら削除 */
+}
+
+.back-button-area {
+  position: absolute;
+  right: 0;
+  /* 右端に配置 */
+  /* .ranking-content-area に padding: 0 20px; があるため、右端から20pxの位置になります */
+  top: 50%;
+  /* 垂直方向の中央 */
+  transform: translateY(-50%);
+  /* 垂直方向の中央揃えを微調整 */
+  z-index: 1;
+  margin: 0;
+  /* 古いマージンをリセット */
+}
+
+#backToListButton {
+  padding: 8px 15px;
+  background-color: #ced4da;
+  /* グレー系 */
+  color: #495057;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  /* 少し小さめに */
+  transition: background-color 0.3s;
+}
+
+#backToListButton:hover {
+  background-color: #bdc3c9;
+}
+
+/*
+ * タブ切り替えエリア
+ */
+
+.tab-buttons-wrapper {
+  /* 新しいラッパー要素（HTMLに追加推奨） */
+  display: flex;
+  justify-content: center;
+  /* 子要素を中央に配置 */
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* 既存のスタイルを維持しつつ、タブを中央に寄せるための調整を再確認します */
+
+/* ★修正点: タブの親要素のdisplayをflexにし、中央揃えを再設定します。★ */
+.ranking-content-area>.tab-and-button-row {
+  /* * .tab-and-button-row が justify-content: space-between; のため、
+     * タブ（左側）が中央ではなく左端に配置されます。
+     * このため、タブを囲む要素の幅を制御する必要があります。
+     */
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 20px;
+  /* ★修正点: タブ間の間隔を 20px に設定 */
+  margin: 0;
+}
+
+.tab-buttons button {
+  padding: 10px 15px;
+  /* ★修正点: 枠線を全て削除 */
+  border: none !important;
+  /* ★修正点1: 優先度を上げて全ての枠線を確実に削除 */
+  outline: none;
+  /* フォーカス時のアウトラインも削除 */
+  box-shadow: none;
+  /* シャドウも削除 */
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: normal;
+  color: #495057;
+  /* ★修正点: 背景色を「透明」または「白」に設定 */
+  background-color: #ffffff;
+  /* 白に設定することで、下の背景色を反映させず、清潔感を出します */
+  /* background-color: transparent; /* 透明でも良いですが、白が確実です */
+  position: relative;
+  /* ★修正点: 各ボタンに下線を追加 ★ */
+  border-bottom: 1px solid #dee2e6;
+  /* 細い下線を追加 */
+  top: 0;
+  /* top: 1pxとmargin-bottom: -1pxの調整をリセット */
+  margin-bottom: 0;
+}
+
+.tab-buttons button.active {
+  /* ★修正点: アクティブなタブには下線のみ設定 */
+  border-bottom: 3px solid #007bff;
+  /* 青色の太い下線 */
+  color: #000000;
+  font-weight: bold;
+  /* アクティブな文字は太字にすることを推奨 */
+  /* 上・左右の線は不要なので削除 */
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding-bottom: 7px;
+  /* 下線のためにパディングを調整 */
+  z-index: 2;
+  background-color: #ffffff;
+  /* アクティブなタブの背景を白に */
+}
+
+.tab-buttons button:hover:not(.active) {
+  background-color: #f8f9fa;
+}
+
+/*
+ * ランキングテーブル
+ */
+
+/* 追加：コンテンツエリアで左右の余白を一括管理 */
+.ranking-content-area {
+  padding: 0 20px;
+  /* 左右に20pxのパディングを設定 */
+  position: relative;
+  /* ボタンの配置基準 */
+}
+
+/*
+ * 新規追加: タブとボタンを横並びにするコンテナ
+ */
+.tab-and-button-row {
+  display: flex;
+  justify-content: space-between;
+  /* タブとボタンを両端に配置 */
+  align-items: flex-end;
+  /* 項目を下揃え（下線と合わせるため） */
+  margin-bottom: 5px;
+  /* テーブルとの間に少し隙間 */
+
+  /* タブとテーブルの間に引かれていた線はここで管理します */
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0;
+  position: relative;
+  /* ボタン絶対配置の基準 */
+}
+
+/* 既存のタブボタンとテーブルの margin をリセット */
+.tab-buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  /* ★修正点: タブ全体を画面中央に寄せたいため、左右の余白を調整します ★ */
+  /* 暫定的に、タブセットの左側にマージンを設定して中央に寄せます */
+  margin-left: 100px;
+  /* 例: 左側に適当なマージンを設定し、目視で中央に近づけます */
+  /
+}
+
+.ranking-table {
+  width: 100%;
+  /* 親要素 (ranking-container) の幅いっぱい */
+  border-collapse: collapse;
+  margin: 0 0 20px 0;
+  /* 左右のmarginを削除または0に設定 */
+  border: 1px solid #dee2e6;
+  /* テーブル全体のボーダー */
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 10px 15px;
+  /* パディングを調整 */
+  text-align: left;
+  font-size: 15px;
+  /* フォントサイズを調整 */
+}
+
+.ranking-table th {
+  background-color: #f1f1f1;
+  color: #333;
+  font-weight: normal;
+  /* 太字ではない */
+  border-bottom: 1px solid #dee2e6;
+  /* 下線のみ */
+  /* ★修正点: 全体のthを中央寄せにすることで、見出しを整理します ★ */
+  text-align: center;
+}
+
+.ranking-table td {
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+  color: #333;
+}
+
+.ranking-table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+  /* 縞模様をなくし白背景 */
+}
+
+.ranking-table tbody tr:hover {
+  background-color: #f8f8f8;
+  /* ホバー時の強調を控えめに */
+}
+
+/*
+ * メダルと順位のスタイル
+ */
+.medals {
+  width: 50px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* 4位以下の順位番号 */
+.ranking-table tbody tr:nth-child(n+4) td:first-child {
+  font-size: 15px;
+  color: #333;
+  /* 黒に戻す */
+}
+
+/* 冊数の強調 */
+.ranking-table td:last-child {
+  font-weight: normal;
+  /* 太字ではない */
+  text-align: left;
+  /* 左寄せに戻す */
+  color: #000000;
+  /* 黒に変更 */
+}
+
+/* 【追加コード】列幅の調整 */
+
+/* 順位 / メダル列の幅設定 */
+.ranking-table th:first-child,
+.ranking-table td:first-child {
+  width: 10%;
+  text-align: center;
+}
+
+/* 紹介者名の列幅設定 */
+.ranking-table th:nth-child(2),
+.ranking-table td:nth-child(2) {
+  width: 60%;
+  /* padding-left: 15px; /* 左パディングを削除するか、均等に調整します */
+  padding-left: 0;
+  padding-right: 0;
+
+  /* ★修正点: 文字を中央寄りに配置 ★ */
+  text-align: center;
+}
+
+/* 書籍数/スコアの列幅設定 */
+.ranking-table th:last-child,
+.ranking-table td:last-child {
+  width: 30%;
+  text-align: right;
+}
+
+/* 冊数のスタイル（右寄せと太字） */
+.ranking-table td:last-child {
+  text-align: right;
+  font-weight: bold;
+}
+
+#rankingDisplayArea h2,
+#purchaseRankingArea h2 {
+  display: none;
+  /* タブ切り替えで見出しが重複しないように非表示 */
+}
